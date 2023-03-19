@@ -3,15 +3,16 @@
 initModule::initModule(QObject *parent)
     : QObject{parent}
 {
-//    Widget w;
+    objServer = new Server;
+    objInterface = new Widget;
+
 }
 
-bool initModule::initInterface()
+void initModule::initialization()
 {
-    w.show();
-    qDebug() << "Nice showed";
-}
-bool initModule::initServer()
-{
-    // как то толкнуть сюда ui чтоб сервер заработал
+    connect(objInterface, SIGNAL(receiveClicked(QHostAddress,quint16)),
+            objServer, SLOT(receiveWait(QHostAddress,quint16)));
+
+    connect(objServer, SIGNAL(datagramToInterface(QString)),
+            objInterface, SLOT(datagramToDisplay(QString)));
 }

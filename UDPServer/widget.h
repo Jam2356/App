@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QUdpSocket>
+#include <QHostAddress>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -21,9 +22,13 @@ public:
 private slots:
     void on_send_clicked();
     void on_receive_clicked();
+    void datagramToDisplay(QString datagram);
 
 private:
     Ui::Widget *ui;
     QUdpSocket *mSocket;
+
+signals:
+    void receiveClicked(QHostAddress, quint16 port);
 };
 #endif // WIDGET_H

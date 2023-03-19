@@ -2,17 +2,21 @@
 #define INITMODULE_H
 
 #include <QObject>
+#include <QDebug>
+
+#include "server.h"
 #include "widget.h"
 #include "ui_widget.h"
-#include <QDebug>
 
 class initModule : public QObject
 {
     Q_OBJECT
 public:
     explicit initModule(QObject *parent = nullptr);
-    bool initInterface();
-    bool initServer();
+    void initialization();
+
+    Server *objServer;
+    Widget *objInterface;
 
 private:
     Widget w;
