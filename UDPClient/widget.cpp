@@ -27,13 +27,13 @@ Widget::~Widget()
 
 void Widget::on_receive_clicked()
 {
-    mSocket->bind(ui->spinPort->value()+1, QUdpSocket::ShareAddress); // ui->spinPort->value()
+    mSocket->bind(ui->spinPort->value()+1); // ui->spinPort->value()
 }
 
 
 void Widget::on_pushButton_clicked()
 {
-    QByteArray datagrama1 = "Client_1: " + ui->msg->text().toLatin1();
+    QByteArray datagrama1 = "Client_1: " + ui->msg->text().toLocal8Bit();
     mSocket->writeDatagram(datagrama1, QHostAddress::LocalHost, ui->spinPort->value());
 }
 

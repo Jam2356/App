@@ -23,14 +23,29 @@ bool Server::bind(QHostAddress addr, quint16 port)
             return false;
 }
 
-//void Server::send(QString message, QHostAddress addr, quint16 port)
-//{
+void Server::closeSocket()
+{
+    mySocket->close();
+}
 
-//}
+void Server::send(QByteArray datagram, QHostAddress addr, quint16 port)
+{
+    mySocket->writeDatagram(datagram, addr, port+1);
+}
+
+void Server::sendWait(QString datagram ,QHostAddress addr, quint16 port)
+{
+    this->send(("Server: " + datagram).toLocal8Bit(), addr ,port);
+}
 
 void Server::receiveWait(QHostAddress addr, quint16 port)
 {
     this->bind(addr, port);
+}
+
+void Server::endReceiveWait()
+{
+    this->closeSocket();
 }
 
 QString Server::incomingConnection()

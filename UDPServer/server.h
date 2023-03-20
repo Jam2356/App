@@ -11,13 +11,16 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
     bool bind(QHostAddress addr, quint16 port);
-    void send(QString message, QHostAddress addr, quint16 port);
+    void send(QByteArray msg, QHostAddress addr, quint16 port);
+    void closeSocket();
 
 private:
     QUdpSocket *mySocket;
 
 private slots:
     void receiveWait(QHostAddress addr, quint16 port);
+    void endReceiveWait();
+    void sendWait(QString datagram, QHostAddress addr, quint16 port);
     QString incomingConnection();
 
 signals:
