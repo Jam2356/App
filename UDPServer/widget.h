@@ -2,14 +2,11 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include <QUdpSocket>
 #include <QHostAddress>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
-
-class QUdpSocket;
 
 class Widget : public QWidget
 {
@@ -27,7 +24,6 @@ private slots:
 
 private:
     Ui::Widget *ui;
-    QUdpSocket *mSocket;
 
 signals:
     void receiveClicked(QHostAddress, quint16 port);

@@ -15,8 +15,11 @@ Widget::~Widget()
 
 void Widget::on_send_clicked()
 {
-    emit sendClicked(ui->msg->text().toLocal8Bit(), QHostAddress::LocalHost, ui->spinPort->value());
-    ui->msg->clear();
+    if(!ui->msg->text().isEmpty())
+    {
+        emit sendClicked(ui->msg->text().toUtf8(), QHostAddress::LocalHost, ui->spinPort->value());
+        ui->msg->clear();
+    }
 }
 
 void Widget::on_receive_clicked() //при нажатии кнопки receive отправляем порт на сервер и там происходит bind

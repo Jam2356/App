@@ -6,7 +6,6 @@
 
 #include "server.h"
 #include "widget.h"
-#include "ui_widget.h"
 
 class initModule : public QObject
 {

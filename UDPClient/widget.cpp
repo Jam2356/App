@@ -6,17 +6,6 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-    mSocket = new QUdpSocket(this);
-    connect(mSocket, &QUdpSocket::readyRead, [&]() {
-        if(mSocket->hasPendingDatagrams()){
-        QHostAddress sender;
-        quint16 senderPort;
-        QByteArray datagrama;
-        datagrama.resize(mSocket->pendingDatagramSize());
-        mSocket->readDatagram(datagrama.data(), datagrama.size(), &sender, &senderPort);
-        ui->listWidget->addItem(QString(datagrama));
-        }
-    });
 }
 
 Widget::~Widget()
@@ -24,16 +13,22 @@ Widget::~Widget()
     delete ui;
 }
 
-
 void Widget::on_receive_clicked()
 {
-    mSocket->bind(ui->spinPort->value()+1); // ui->spinPort->value()
+    emit receiveClicked(QHostAddress::LocalHost, ui->spinPort->value());
 }
 
-
-void Widget::on_pushButton_clicked()
+void Widget::on_send_clicked()
 {
-    QByteArray datagrama1 = "Client_1: " + ui->msg->text().toLocal8Bit();
-    mSocket->writeDatagram(datagrama1, QHostAddress::LocalHost, ui->spinPort->value());
+    if(!ui->msg->text().isEmpty())
+    {
+        emit sendClicked(ui->msg->text().toUtf8(), QHostAddress::LocalHost, ui->spinPort->value());
+        ui->msg->clear();
+    }
+}
+
+void Widget::datagramToDisplay(QString datagram)
+{
+    ui->chat->addItem(datagram);
 }
 

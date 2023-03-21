@@ -1,15 +1,16 @@
 #include "initmodule.h"
 #include <QApplication>
-//v1_1_1
-//Изменения: добавлена функция и кнопка End receive (закрывает сокет), добавлена функция отправки сообщений кнопкой Send
-//TO DO: Добавить проверку на пустую строку перед отправкой в widget.cpp
-//TO DO: переделать Client
+//v1_1_2 Server
+//Изменения: кардинальных изменений нет,
+//           добавлена проверка на пустую строку перед отправкой в widget.cpp,
+//           добавлена возможность работать с русским языком
+//TO DO: организовать мультипоточность
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    initModule in;
-    in.initialization();
-    in.objInterface->show();
+    initModule init;
+    init.initialization();
+    init.objInterface->show();
 
     return a.exec();
 }

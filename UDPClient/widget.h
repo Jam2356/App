@@ -2,13 +2,11 @@
 #define WIDGET_H
 
 #include <QWidget>
-#include <QUdpSocket>
+#include <QHostAddress>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
 QT_END_NAMESPACE
-
-class QUdpSocket;
 
 class Widget : public QWidget
 {
@@ -20,11 +18,15 @@ public:
 
 private slots:
     void on_receive_clicked();
+    void on_send_clicked();
+    void datagramToDisplay(QString datagram);
 
-    void on_pushButton_clicked();
 
 private:
     Ui::Widget *ui;
-    QUdpSocket *mSocket;
+
+signals:
+    void receiveClicked(QHostAddress, quint16 port);
+    void sendClicked(QString msg, QHostAddress, quint16 port);
 };
 #endif // WIDGET_H

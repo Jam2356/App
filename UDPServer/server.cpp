@@ -6,7 +6,8 @@ Server::Server(QObject *parent)
     mySocket = new QUdpSocket;
 }
 
-Server::~Server() {
+Server::~Server()
+{
     mySocket->close();
     delete mySocket;
 }
@@ -16,8 +17,8 @@ Server::~Server() {
 bool Server::bind(QHostAddress addr, quint16 port)
 {
     connect(mySocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
-    int stat = mySocket->bind(addr, port);
-        if(stat == true)
+    int status = mySocket->bind(addr, port);
+        if(status == true)
             return true;
         else
             return false;
@@ -35,7 +36,7 @@ void Server::send(QByteArray datagram, QHostAddress addr, quint16 port)
 
 void Server::sendWait(QString datagram ,QHostAddress addr, quint16 port)
 {
-    this->send(("Server: " + datagram).toLocal8Bit(), addr ,port);
+    this->send(("Server: " + datagram).toUtf8(), addr ,port);
 }
 
 void Server::receiveWait(QHostAddress addr, quint16 port)
