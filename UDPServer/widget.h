@@ -28,6 +28,6 @@ private:
 signals:
     void receiveClicked(QHostAddress, quint16 port);
     void endReceiveClicked();
-    void sendClicked(QString msg, QHostAddress, quint16 port);
+    void sendClicked(QString msg, QHostAddress);
 };
 #endif // WIDGET_H

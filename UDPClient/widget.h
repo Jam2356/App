@@ -26,7 +26,7 @@ private:
     Ui::Widget *ui;
 
 signals:
-    void receiveClicked(QHostAddress, quint16 port);
+    void receiveClicked(QHostAddress);
     void sendClicked(QString msg, QHostAddress, quint16 port);
 };
 #endif // WIDGET_H

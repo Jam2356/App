@@ -3,7 +3,7 @@
 Server::Server(QObject *parent)
     : QObject{parent}
 {
-    mySocket = new QUdpSocket;
+    //mySocket = new QUdpSocket;
 }
 
 Server::~Server()
@@ -16,6 +16,7 @@ Server::~Server()
 
 bool Server::bind(QHostAddress addr, quint16 port)
 {
+    mySocket = new QUdpSocket;
     connect(mySocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
     int status = mySocket->bind(addr, port);
         if(status == true)
@@ -29,14 +30,14 @@ void Server::closeSocket()
     mySocket->close();
 }
 
-void Server::send(QByteArray datagram, QHostAddress addr, quint16 port)
+void Server::send(QByteArray datagram, QHostAddress addr)
 {
-    mySocket->writeDatagram(datagram, addr, port+1);
+    mySocket->writeDatagram(datagram, addr, senderPort);
 }
 
-void Server::sendWait(QString datagram ,QHostAddress addr, quint16 port)
+void Server::sendWait(QString datagram ,QHostAddress addr)
 {
-    this->send(("Server: " + datagram).toUtf8(), addr ,port);
+    this->send(("Server: " + datagram).toUtf8(), addr);
 }
 
 void Server::receiveWait(QHostAddress addr, quint16 port)
@@ -51,11 +52,10 @@ void Server::endReceiveWait()
 
 QString Server::incomingConnection()
 {
-    QHostAddress senderAddr;
-    quint16 senderPort;
     QByteArray datagram;
     datagram.resize(mySocket->pendingDatagramSize());
     mySocket->readDatagram(datagram.data(), datagram.size(), &senderAddr, &senderPort);
+    qDebug()<< " Address: " << senderAddr << " Port: " << senderPort;
     if(!QString(datagram).isEmpty()) {
         emit datagramToInterface(QString(datagram)); //Отправляем сообщение из сокета в интерфейс
     }

@@ -42,9 +42,9 @@ static constexpr auto qt_meta_stringdata_Widget = QtMocHelpers::stringData(
     "receiveClicked",
     "",
     "QHostAddress",
-    "port",
     "sendClicked",
     "msg",
+    "port",
     "on_receive_clicked",
     "on_send_clicked",
     "datagramToDisplay",
@@ -57,9 +57,9 @@ struct qt_meta_stringdata_Widget_t {
     char stringdata1[15];
     char stringdata2[1];
     char stringdata3[13];
-    char stringdata4[5];
-    char stringdata5[12];
-    char stringdata6[4];
+    char stringdata4[12];
+    char stringdata5[4];
+    char stringdata6[5];
     char stringdata7[19];
     char stringdata8[16];
     char stringdata9[18];
@@ -73,9 +73,9 @@ Q_CONSTINIT static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget =
         QT_MOC_LITERAL(7, 14),  // "receiveClicked"
         QT_MOC_LITERAL(22, 0),  // ""
         QT_MOC_LITERAL(23, 12),  // "QHostAddress"
-        QT_MOC_LITERAL(36, 4),  // "port"
-        QT_MOC_LITERAL(41, 11),  // "sendClicked"
-        QT_MOC_LITERAL(53, 3),  // "msg"
+        QT_MOC_LITERAL(36, 11),  // "sendClicked"
+        QT_MOC_LITERAL(48, 3),  // "msg"
+        QT_MOC_LITERAL(52, 4),  // "port"
         QT_MOC_LITERAL(57, 18),  // "on_receive_clicked"
         QT_MOC_LITERAL(76, 15),  // "on_send_clicked"
         QT_MOC_LITERAL(92, 17),  // "datagramToDisplay"
@@ -85,9 +85,9 @@ Q_CONSTINIT static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget =
     "receiveClicked",
     "",
     "QHostAddress",
-    "port",
     "sendClicked",
     "msg",
+    "port",
     "on_receive_clicked",
     "on_send_clicked",
     "datagramToDisplay",
@@ -111,17 +111,17 @@ Q_CONSTINIT static const uint qt_meta_data_Widget[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    2,   44,    2, 0x06,    1 /* Public */,
-       5,    3,   49,    2, 0x06,    4 /* Public */,
+       1,    1,   44,    2, 0x06,    1 /* Public */,
+       4,    3,   47,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       7,    0,   56,    2, 0x08,    8 /* Private */,
-       8,    0,   57,    2, 0x08,    9 /* Private */,
-       9,    1,   58,    2, 0x08,   10 /* Private */,
+       7,    0,   54,    2, 0x08,    7 /* Private */,
+       8,    0,   55,    2, 0x08,    8 /* Private */,
+       9,    1,   56,    2, 0x08,    9 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort,    2,    4,
-    QMetaType::Void, QMetaType::QString, 0x80000000 | 3, QMetaType::UShort,    6,    2,    4,
+    QMetaType::Void, 0x80000000 | 3,    2,
+    QMetaType::Void, QMetaType::QString, 0x80000000 | 3, QMetaType::UShort,    5,    2,    6,
 
  // slots: parameters
     QMetaType::Void,
@@ -143,7 +143,6 @@ Q_CONSTINIT const QMetaObject Widget::staticMetaObject = { {
         // method 'receiveClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>,
-        QtPrivate::TypeAndForceComplete<quint16, std::false_type>,
         // method 'sendClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
@@ -166,7 +165,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<Widget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->receiveClicked((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2]))); break;
+        case 0: _t->receiveClicked((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1]))); break;
         case 1: _t->sendClicked((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
         case 2: _t->on_receive_clicked(); break;
         case 3: _t->on_send_clicked(); break;
@@ -176,7 +175,7 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Widget::*)(QHostAddress , quint16 );
+            using _t = void (Widget::*)(QHostAddress );
             if (_t _q_method = &Widget::receiveClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -223,9 +222,9 @@ int Widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Widget::receiveClicked(QHostAddress _t1, quint16 _t2)
+void Widget::receiveClicked(QHostAddress _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

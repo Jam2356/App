@@ -15,7 +15,7 @@ Widget::~Widget()
 
 void Widget::on_receive_clicked()
 {
-    emit receiveClicked(QHostAddress::LocalHost, ui->spinPort->value());
+    emit receiveClicked(QHostAddress::LocalHost);
 }
 
 void Widget::on_send_clicked()

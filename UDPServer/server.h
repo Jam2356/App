@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUdpSocket>
+#include <QDebug>
 
 class Server : public QObject
 {
@@ -11,16 +12,18 @@ public:
     explicit Server(QObject *parent = nullptr);
     ~Server();
     bool bind(QHostAddress addr, quint16 port);
-    void send(QByteArray msg, QHostAddress addr, quint16 port);
+    void send(QByteArray msg, QHostAddress addr);
     void closeSocket();
 
 private:
     QUdpSocket *mySocket;
+    QHostAddress senderAddr;
+    quint16 senderPort;
 
 private slots:
     void receiveWait(QHostAddress addr, quint16 port);
     void endReceiveWait();
-    void sendWait(QString datagram, QHostAddress addr, quint16 port);
+    void sendWait(QString datagram, QHostAddress addr);
     QString incomingConnection();
 
 signals:

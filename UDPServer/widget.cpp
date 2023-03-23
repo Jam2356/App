@@ -17,7 +17,7 @@ void Widget::on_send_clicked()
 {
     if(!ui->msg->text().isEmpty())
     {
-        emit sendClicked(ui->msg->text().toUtf8(), QHostAddress::LocalHost, ui->spinPort->value());
+        emit sendClicked(ui->msg->text().toUtf8(), QHostAddress::LocalHost);
         ui->msg->clear();
     }
 }

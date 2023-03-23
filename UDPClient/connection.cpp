@@ -12,12 +12,18 @@ Connection::~Connection()
     delete clientSocket;
 }
 
-bool Connection::bind(QHostAddress addr, quint16 port)
+bool Connection::bind(QHostAddress addr)
 {
+    std::random_device rd; //Cекция генерации порта
+    std::mt19937 mt(rd());
+    const int min = 1;
+    const int max = 64000;
+    std::uniform_int_distribution<int> ds(min, max);
+    quint16 port = ds(mt);
     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
-    int status = clientSocket->bind(addr, port+1);
+    int status = clientSocket->bind(addr, port);
         if(status == true){
-            qDebug() <<"Bind!";
+            qDebug() <<"Bind!" << "Port: " << port;
             return true;
         }
         else
@@ -29,9 +35,9 @@ void Connection::send(QByteArray datagram, QHostAddress addr, quint16 port)
     clientSocket->writeDatagram(datagram, addr, port);
 }
 
-void Connection::receiveWait(QHostAddress addr, quint16 port)
+void Connection::receiveWait(QHostAddress addr)
 {
-    this->bind(addr, port);
+    this->bind(addr);
 }
 
 QString Connection::incomingConnection()

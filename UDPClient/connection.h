@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QUdpSocket>
+#include <random>
 //
 #include <QDebug>
 //
@@ -13,14 +14,14 @@ class Connection : public QObject
 public:
     explicit Connection(QObject *parent = nullptr);
     ~Connection();
-    bool bind(QHostAddress addr, quint16 port);
+    bool bind(QHostAddress addr);
     void send(QByteArray datagram, QHostAddress addr, quint16 port);
 
 private:
     QUdpSocket *clientSocket;
 
 private slots:
-    void receiveWait(QHostAddress addr, quint16 port);
+    void receiveWait(QHostAddress addr);
     void sendWait(QString datagram, QHostAddress addr, quint16 port);
     QString incomingConnection();
 
