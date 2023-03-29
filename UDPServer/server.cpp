@@ -33,6 +33,8 @@ void Server::closeSocket()
 void Server::send(QByteArray datagram, QHostAddress addr)
 {
     mySocket->writeDatagram(datagram, addr, senderPort);
+    //Тестовый вариант, выводит втроку адрес+порт можн будет давать такие имена объектам класса buffers
+    qDebug()<< addr.toString()+QString::number(senderPort);
 }
 
 void Server::sendWait(QString datagram ,QHostAddress addr)

@@ -19,6 +19,8 @@ public:
 
 private:
     QUdpSocket *clientSocket;
+    bool statusConnect = false;
+    quint16 myPort;
 
 private slots:
     void receiveWait(QHostAddress addr);

@@ -19,11 +19,11 @@ bool Connection::bind(QHostAddress addr)
     const int min = 1;
     const int max = 64000;
     std::uniform_int_distribution<int> ds(min, max);
-    quint16 port = ds(mt);
+    quint16 myPort = ds(mt);
     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
-    int status = clientSocket->bind(addr, port);
+    int status = clientSocket->bind(addr, myPort);
         if(status == true){
-            qDebug() <<"Bind!" << "Port: " << port;
+            qDebug() <<"Bind!" << "Your port: " << myPort;
             return true;
         }
         else
@@ -40,6 +40,21 @@ void Connection::receiveWait(QHostAddress addr)
     this->bind(addr);
 }
 
+void Connection::sendWait(QString datagram ,QHostAddress addr, quint16 port)
+{
+    if(statusConnect == false)
+    {
+        this->send(("Client: " + datagram +"/flags/"+QString::number(myPort)).toUtf8(), addr ,port); //Отправка первого сообщения на сервер для того чтоб сервер понял, что присоеденился новый человек
+        qDebug() << "Первая строка: " << ("Client: " + datagram +"/flags/"+QString::number(myPort)).toUtf8(); //Можно попробовать перенести в "По нажатию кнопки receive"
+        statusConnect = true;
+
+    }
+    else
+    {
+        this->send(("Client: " + datagram).toUtf8(), addr ,port);
+    }
+}
+
 QString Connection::incomingConnection()
 {
     QHostAddress senderAddr;
@@ -53,7 +68,3 @@ QString Connection::incomingConnection()
     return QString(datagram);
 }
 
-void Connection::sendWait(QString datagram ,QHostAddress addr, quint16 port)
-{
-    this->send(("Client: " + datagram).toUtf8(), addr ,port);
-}

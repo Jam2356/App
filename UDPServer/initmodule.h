@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QDebug>
-
 #include "server.h"
 #include "widget.h"
 
