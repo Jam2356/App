@@ -1,0 +1,11 @@
+release/buffers.o
+release/connections.o
+release/initmodule.o
+release/main.o
+release/server.o
+release/widget.o
+release/moc_buffers.o
+release/moc_connections.o
+release/moc_initmodule.o
+release/moc_server.o
+release/moc_widget.o

@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QUdpSocket>
 #include <QDebug>
-#include "buffers.h" //Основной поток сервера будет читать сокеты
+#include "buffers.h" //Основной поток сервера будет читать с сокета
 #include "connections.h"
 
 class Server : public QObject
@@ -22,9 +22,9 @@ private:
     QHostAddress senderAddr;
     quint16 senderPort;
 
+    bool ofOnline = false; //Будет перенесено в базу данных для каждого человека свое
+
 private slots:
-    void receiveWait(QHostAddress addr, quint16 port);
-    void endReceiveWait();
     void sendWait(QString datagram, QHostAddress addr);
     QString incomingConnection();
 

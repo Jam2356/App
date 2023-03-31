@@ -20,13 +20,14 @@ private slots:
     void on_receive_clicked();
     void on_send_clicked();
     void datagramToDisplay(QString datagram);
+    void receiveUnavailable();
 
 
 private:
     Ui::Widget *ui;
 
 signals:
-    void receiveClicked(QHostAddress);
+    void receiveClicked(QHostAddress, quint16);
     void sendClicked(QString msg, QHostAddress, quint16 port);
 };
 #endif // WIDGET_H

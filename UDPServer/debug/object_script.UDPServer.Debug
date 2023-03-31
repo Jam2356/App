@@ -1,0 +1,11 @@
+debug/buffers.o
+debug/connections.o
+debug/initmodule.o
+debug/main.o
+debug/server.o
+debug/widget.o
+debug/moc_buffers.o
+debug/moc_connections.o
+debug/moc_initmodule.o
+debug/moc_server.o
+debug/moc_widget.o

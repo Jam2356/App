@@ -8,22 +8,22 @@ Connection::Connection(QObject *parent)
 
 Connection::~Connection()
 {
-    clientSocket->close();
+    clientSocket->abort();
     delete clientSocket;
 }
 
-bool Connection::bind(QHostAddress addr)
+bool Connection::binding(QHostAddress addr)
 {
     std::random_device rd; //Cекция генерации порта
     std::mt19937 mt(rd());
     const int min = 1;
     const int max = 64000;
     std::uniform_int_distribution<int> ds(min, max);
-    quint16 myPort = ds(mt);
+    myPort = ds(mt);
     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
     int status = clientSocket->bind(addr, myPort);
         if(status == true){
-            qDebug() <<"Bind!" << "Your port: " << myPort;
+            qDebug() <<"Успешный Bind!" << "Ваш порт: " << myPort;
             return true;
         }
         else
@@ -35,24 +35,17 @@ void Connection::send(QByteArray datagram, QHostAddress addr, quint16 port)
     clientSocket->writeDatagram(datagram, addr, port);
 }
 
-void Connection::receiveWait(QHostAddress addr)
+void Connection::receiveWait(QHostAddress addr, quint16 port)
 {
-    this->bind(addr);
+    this->binding(addr);
+    this->send(("c/"+addr.toString()+"/"+QString::number(myPort)).toUtf8(), addr ,port); //Отправка первого сообщения на сервер для того чтоб сервер понял, что присоеденился новый человек
+    emit receiveSetBlock();
+    qDebug() << "Первая строка: " << ("c/"+addr.toString()+"/"+QString::number(myPort)).toUtf8(); //Можно попробовать перенести в "По нажатию кнопки receive" c - сonntction
 }
 
 void Connection::sendWait(QString datagram ,QHostAddress addr, quint16 port)
 {
-    if(statusConnect == false)
-    {
-        this->send(("Client: " + datagram +"/flags/"+QString::number(myPort)).toUtf8(), addr ,port); //Отправка первого сообщения на сервер для того чтоб сервер понял, что присоеденился новый человек
-        qDebug() << "Первая строка: " << ("Client: " + datagram +"/flags/"+QString::number(myPort)).toUtf8(); //Можно попробовать перенести в "По нажатию кнопки receive"
-        statusConnect = true;
-
-    }
-    else
-    {
-        this->send(("Client: " + datagram).toUtf8(), addr ,port);
-    }
+    this->send(("Client: " + datagram).toUtf8(), addr ,port);
 }
 
 QString Connection::incomingConnection()
@@ -67,4 +60,5 @@ QString Connection::incomingConnection()
     }
     return QString(datagram);
 }
+
 

@@ -15,7 +15,7 @@ Widget::~Widget()
 
 void Widget::on_receive_clicked()
 {
-    emit receiveClicked(QHostAddress::LocalHost);
+    emit receiveClicked(QHostAddress::LocalHost, ui->spinPort->value());
 }
 
 void Widget::on_send_clicked()
@@ -32,3 +32,8 @@ void Widget::datagramToDisplay(QString datagram)
     ui->chat->addItem(datagram);
 }
 
+void Widget::receiveUnavailable()
+{
+    ui->receive->setEnabled(false);
+    ui->receive->setText("Connect");
+}

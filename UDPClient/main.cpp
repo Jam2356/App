@@ -1,8 +1,8 @@
 #include "initmodule.h"
 #include <QApplication>
-//v1_1_4 Client
-//Изменения: Добавлена отправка на сервер хендшейк-сообщения
-//TO DO: Может быть стоит удалить кнопку receive или убрать выбор порта сервера
+//v1_1_5 Client
+//Изменения: Изменено хендшейк-сообщение, отредактирована работа кнопки receive
+//TO DO: Дальнейших изменений не запланировано
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

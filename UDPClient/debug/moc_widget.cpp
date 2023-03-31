@@ -48,11 +48,12 @@ static constexpr auto qt_meta_stringdata_Widget = QtMocHelpers::stringData(
     "on_receive_clicked",
     "on_send_clicked",
     "datagramToDisplay",
-    "datagram"
+    "datagram",
+    "receiveUnavailable"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_Widget_t {
-    uint offsetsAndSizes[22];
+    uint offsetsAndSizes[24];
     char stringdata0[7];
     char stringdata1[15];
     char stringdata2[1];
@@ -64,6 +65,7 @@ struct qt_meta_stringdata_Widget_t {
     char stringdata8[16];
     char stringdata9[18];
     char stringdata10[9];
+    char stringdata11[19];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Widget_t::offsetsAndSizes) + ofs), len 
@@ -79,7 +81,8 @@ Q_CONSTINIT static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget =
         QT_MOC_LITERAL(57, 18),  // "on_receive_clicked"
         QT_MOC_LITERAL(76, 15),  // "on_send_clicked"
         QT_MOC_LITERAL(92, 17),  // "datagramToDisplay"
-        QT_MOC_LITERAL(110, 8)   // "datagram"
+        QT_MOC_LITERAL(110, 8),  // "datagram"
+        QT_MOC_LITERAL(119, 18)   // "receiveUnavailable"
     },
     "Widget",
     "receiveClicked",
@@ -91,7 +94,8 @@ Q_CONSTINIT static const qt_meta_stringdata_Widget_t qt_meta_stringdata_Widget =
     "on_receive_clicked",
     "on_send_clicked",
     "datagramToDisplay",
-    "datagram"
+    "datagram",
+    "receiveUnavailable"
 };
 #undef QT_MOC_LITERAL
 #endif // !QT_MOC_HAS_STRING_DATA
@@ -103,7 +107,7 @@ Q_CONSTINIT static const uint qt_meta_data_Widget[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -111,22 +115,24 @@ Q_CONSTINIT static const uint qt_meta_data_Widget[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   44,    2, 0x06,    1 /* Public */,
-       4,    3,   47,    2, 0x06,    3 /* Public */,
+       1,    2,   50,    2, 0x06,    1 /* Public */,
+       4,    3,   55,    2, 0x06,    4 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       7,    0,   54,    2, 0x08,    7 /* Private */,
-       8,    0,   55,    2, 0x08,    8 /* Private */,
-       9,    1,   56,    2, 0x08,    9 /* Private */,
+       7,    0,   62,    2, 0x08,    8 /* Private */,
+       8,    0,   63,    2, 0x08,    9 /* Private */,
+       9,    1,   64,    2, 0x08,   10 /* Private */,
+      11,    0,   67,    2, 0x08,   12 /* Private */,
 
  // signals: parameters
-    QMetaType::Void, 0x80000000 | 3,    2,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::UShort,    2,    2,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 3, QMetaType::UShort,    5,    2,    6,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   10,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -143,6 +149,7 @@ Q_CONSTINIT const QMetaObject Widget::staticMetaObject = { {
         // method 'receiveClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>,
+        QtPrivate::TypeAndForceComplete<quint16, std::false_type>,
         // method 'sendClicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
@@ -154,7 +161,9 @@ Q_CONSTINIT const QMetaObject Widget::staticMetaObject = { {
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'datagramToDisplay'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QString, std::false_type>
+        QtPrivate::TypeAndForceComplete<QString, std::false_type>,
+        // method 'receiveUnavailable'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
 } };
@@ -165,17 +174,18 @@ void Widget::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<Widget *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->receiveClicked((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1]))); break;
+        case 0: _t->receiveClicked((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2]))); break;
         case 1: _t->sendClicked((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
         case 2: _t->on_receive_clicked(); break;
         case 3: _t->on_send_clicked(); break;
         case 4: _t->datagramToDisplay((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 5: _t->receiveUnavailable(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Widget::*)(QHostAddress );
+            using _t = void (Widget::*)(QHostAddress , quint16 );
             if (_t _q_method = &Widget::receiveClicked; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 0;
                 return;
@@ -210,21 +220,21 @@ int Widget::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }
 
 // SIGNAL 0
-void Widget::receiveClicked(QHostAddress _t1)
+void Widget::receiveClicked(QHostAddress _t1, quint16 _t2)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

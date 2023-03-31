@@ -13,12 +13,6 @@ void initModule::initialization()
     connect(objServer, SIGNAL(datagramToInterface(QString)),
             objInterface, SLOT(datagramToDisplay(QString)));
 
-    connect(objInterface, SIGNAL(endReceiveClicked()),
-            objServer, SLOT(endReceiveWait()));
-
     connect(objInterface, SIGNAL(sendClicked(QString,QHostAddress)),
             objServer, SLOT(sendWait(QString,QHostAddress)));
-
-    connect(objInterface, SIGNAL(receiveClicked(QHostAddress,quint16)),
-            objServer, SLOT(receiveWait(QHostAddress,quint16)));
 }

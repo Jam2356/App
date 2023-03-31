@@ -59,6 +59,7 @@ public:
         spinPort = new QSpinBox(Widget);
         spinPort->setObjectName("spinPort");
         spinPort->setMaximum(65000);
+        spinPort->setValue(100);
 
         horizontalLayout->addWidget(spinPort);
 
