@@ -41,18 +41,19 @@ static constexpr auto qt_meta_stringdata_Connection = QtMocHelpers::stringData(
     "Connection",
     "datagramToInterface",
     "",
-    "receiveSetBlock",
-    "receiveWait",
+    "connectSetBlock",
+    "connectWait",
     "QHostAddress",
     "addr",
     "port",
     "sendWait",
     "datagram",
+    "disconnectWait",
     "incomingConnection"
 );
 #else  // !QT_MOC_HAS_STRING_DATA
 struct qt_meta_stringdata_Connection_t {
-    uint offsetsAndSizes[22];
+    uint offsetsAndSizes[24];
     char stringdata0[11];
     char stringdata1[20];
     char stringdata2[1];
@@ -63,7 +64,8 @@ struct qt_meta_stringdata_Connection_t {
     char stringdata7[5];
     char stringdata8[9];
     char stringdata9[9];
-    char stringdata10[19];
+    char stringdata10[15];
+    char stringdata11[19];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(sizeof(qt_meta_stringdata_Connection_t::offsetsAndSizes) + ofs), len 
@@ -72,25 +74,27 @@ Q_CONSTINIT static const qt_meta_stringdata_Connection_t qt_meta_stringdata_Conn
         QT_MOC_LITERAL(0, 10),  // "Connection"
         QT_MOC_LITERAL(11, 19),  // "datagramToInterface"
         QT_MOC_LITERAL(31, 0),  // ""
-        QT_MOC_LITERAL(32, 15),  // "receiveSetBlock"
-        QT_MOC_LITERAL(48, 11),  // "receiveWait"
+        QT_MOC_LITERAL(32, 15),  // "connectSetBlock"
+        QT_MOC_LITERAL(48, 11),  // "connectWait"
         QT_MOC_LITERAL(60, 12),  // "QHostAddress"
         QT_MOC_LITERAL(73, 4),  // "addr"
         QT_MOC_LITERAL(78, 4),  // "port"
         QT_MOC_LITERAL(83, 8),  // "sendWait"
         QT_MOC_LITERAL(92, 8),  // "datagram"
-        QT_MOC_LITERAL(101, 18)   // "incomingConnection"
+        QT_MOC_LITERAL(101, 14),  // "disconnectWait"
+        QT_MOC_LITERAL(116, 18)   // "incomingConnection"
     },
     "Connection",
     "datagramToInterface",
     "",
-    "receiveSetBlock",
-    "receiveWait",
+    "connectSetBlock",
+    "connectWait",
     "QHostAddress",
     "addr",
     "port",
     "sendWait",
     "datagram",
+    "disconnectWait",
     "incomingConnection"
 };
 #undef QT_MOC_LITERAL
@@ -103,7 +107,7 @@ Q_CONSTINIT static const uint qt_meta_data_Connection[] = {
       11,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -111,13 +115,14 @@ Q_CONSTINIT static const uint qt_meta_data_Connection[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    1,   44,    2, 0x06,    1 /* Public */,
-       3,    0,   47,    2, 0x06,    3 /* Public */,
+       1,    1,   50,    2, 0x06,    1 /* Public */,
+       3,    0,   53,    2, 0x06,    3 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       4,    2,   48,    2, 0x08,    4 /* Private */,
-       8,    3,   53,    2, 0x08,    7 /* Private */,
-      10,    0,   60,    2, 0x08,   11 /* Private */,
+       4,    2,   54,    2, 0x08,    4 /* Private */,
+       8,    1,   59,    2, 0x08,    7 /* Private */,
+      10,    0,   62,    2, 0x08,    9 /* Private */,
+      11,    0,   63,    2, 0x08,   10 /* Private */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    2,
@@ -125,7 +130,8 @@ Q_CONSTINIT static const uint qt_meta_data_Connection[] = {
 
  // slots: parameters
     QMetaType::Void, 0x80000000 | 5, QMetaType::UShort,    6,    7,
-    QMetaType::Void, QMetaType::QString, 0x80000000 | 5, QMetaType::UShort,    9,    6,    7,
+    QMetaType::Void, QMetaType::QString,    9,
+    QMetaType::Void,
     QMetaType::QString,
 
        0        // eod
@@ -143,17 +149,17 @@ Q_CONSTINIT const QMetaObject Connection::staticMetaObject = { {
         // method 'datagramToInterface'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        // method 'receiveSetBlock'
+        // method 'connectSetBlock'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'receiveWait'
+        // method 'connectWait'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>,
         QtPrivate::TypeAndForceComplete<quint16, std::false_type>,
         // method 'sendWait'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>,
-        QtPrivate::TypeAndForceComplete<quint16, std::false_type>,
+        // method 'disconnectWait'
+        QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'incomingConnection'
         QtPrivate::TypeAndForceComplete<QString, std::false_type>
     >,
@@ -167,10 +173,11 @@ void Connection::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         (void)_t;
         switch (_id) {
         case 0: _t->datagramToInterface((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 1: _t->receiveSetBlock(); break;
-        case 2: _t->receiveWait((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2]))); break;
-        case 3: _t->sendWait((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[3]))); break;
-        case 4: { QString _r = _t->incomingConnection();
+        case 1: _t->connectSetBlock(); break;
+        case 2: _t->connectWait((*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<quint16>>(_a[2]))); break;
+        case 3: _t->sendWait((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 4: _t->disconnectWait(); break;
+        case 5: { QString _r = _t->incomingConnection();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -185,7 +192,7 @@ void Connection::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         }
         {
             using _t = void (Connection::*)();
-            if (_t _q_method = &Connection::receiveSetBlock; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
+            if (_t _q_method = &Connection::connectSetBlock; *reinterpret_cast<_t *>(_a[1]) == _q_method) {
                 *result = 1;
                 return;
             }
@@ -212,13 +219,13 @@ int Connection::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }
@@ -231,7 +238,7 @@ void Connection::datagramToInterface(QString _t1)
 }
 
 // SIGNAL 1
-void Connection::receiveSetBlock()
+void Connection::connectSetBlock()
 {
     QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }

@@ -13,11 +13,13 @@ SOURCES += \
     connection.cpp \
     initmodule.cpp \
     main.cpp \
+    packetmanager.cpp \
     widget.cpp
 
 HEADERS += \
     connection.h \
     initmodule.h \
+    packetmanager.h \
     widget.h
 
 FORMS += \

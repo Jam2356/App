@@ -6,6 +6,8 @@
 #include <QDebug>
 #include "buffers.h" //Основной поток сервера будет читать с сокета
 #include "connections.h"
+#include "packmanager.h"
+
 
 class Server : public QObject
 {
@@ -15,17 +17,17 @@ public:
     ~Server();
     bool bind(QHostAddress addr, quint16 port);
     void send(QByteArray msg, QHostAddress addr);
-    void closeSocket();
+//    void closeDynamicMemory();
+
 
 private:
     QUdpSocket *mySocket;
+    PackManager *objPackManager;
     QHostAddress senderAddr;
     quint16 senderPort;
 
-    bool ofOnline = false; //Будет перенесено в базу данных для каждого человека свое
-
 private slots:
-    void sendWait(QString datagram, QHostAddress addr);
+    void sendWaitMsg(QString datagram, QHostAddress addr);
     QString incomingConnection();
 
 signals:

@@ -14,6 +14,7 @@ SOURCES += \
     connections.cpp \
     initmodule.cpp \
     main.cpp \
+    packmanager.cpp \
     server.cpp \
     widget.cpp
 
@@ -21,6 +22,7 @@ HEADERS += \
     buffers.h \
     connections.h \
     initmodule.h \
+    packmanager.h \
     server.h \
     widget.h
 

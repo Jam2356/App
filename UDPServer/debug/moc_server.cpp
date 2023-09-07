@@ -42,7 +42,7 @@ static constexpr auto qt_meta_stringdata_Server = QtMocHelpers::stringData(
     "datagramToInterface",
     "",
     "datagram",
-    "sendWait",
+    "sendWaitMsg",
     "QHostAddress",
     "addr",
     "incomingConnection"
@@ -54,7 +54,7 @@ struct qt_meta_stringdata_Server_t {
     char stringdata1[20];
     char stringdata2[1];
     char stringdata3[9];
-    char stringdata4[9];
+    char stringdata4[12];
     char stringdata5[13];
     char stringdata6[5];
     char stringdata7[19];
@@ -67,16 +67,16 @@ Q_CONSTINIT static const qt_meta_stringdata_Server_t qt_meta_stringdata_Server =
         QT_MOC_LITERAL(7, 19),  // "datagramToInterface"
         QT_MOC_LITERAL(27, 0),  // ""
         QT_MOC_LITERAL(28, 8),  // "datagram"
-        QT_MOC_LITERAL(37, 8),  // "sendWait"
-        QT_MOC_LITERAL(46, 12),  // "QHostAddress"
-        QT_MOC_LITERAL(59, 4),  // "addr"
-        QT_MOC_LITERAL(64, 18)   // "incomingConnection"
+        QT_MOC_LITERAL(37, 11),  // "sendWaitMsg"
+        QT_MOC_LITERAL(49, 12),  // "QHostAddress"
+        QT_MOC_LITERAL(62, 4),  // "addr"
+        QT_MOC_LITERAL(67, 18)   // "incomingConnection"
     },
     "Server",
     "datagramToInterface",
     "",
     "datagram",
-    "sendWait",
+    "sendWaitMsg",
     "QHostAddress",
     "addr",
     "incomingConnection"
@@ -127,7 +127,7 @@ Q_CONSTINIT const QMetaObject Server::staticMetaObject = { {
         // method 'datagramToInterface'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
-        // method 'sendWait'
+        // method 'sendWaitMsg'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         QtPrivate::TypeAndForceComplete<QString, std::false_type>,
         QtPrivate::TypeAndForceComplete<QHostAddress, std::false_type>,
@@ -144,7 +144,7 @@ void Server::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         (void)_t;
         switch (_id) {
         case 0: _t->datagramToInterface((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 1: _t->sendWait((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2]))); break;
+        case 1: _t->sendWaitMsg((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<QHostAddress>>(_a[2]))); break;
         case 2: { QString _r = _t->incomingConnection();
             if (_a[0]) *reinterpret_cast< QString*>(_a[0]) = std::move(_r); }  break;
         default: ;

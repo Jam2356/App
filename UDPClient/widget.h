@@ -16,18 +16,23 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
+protected:
+    bool eventFilter(QObject *watched, QEvent *event);
+
 private slots:
     void on_receive_clicked();
     void on_send_clicked();
     void datagramToDisplay(QString datagram);
-    void receiveUnavailable();
+    void connectUnavailable();
 
 
 private:
     Ui::Widget *ui;
+    int fCloseWC = 0; //Флаг что Close was clicked без этого eventFilter срабатывал дважды
 
 signals:
-    void receiveClicked(QHostAddress, quint16);
-    void sendClicked(QString msg, QHostAddress, quint16 port);
+    void connectClicked(QHostAddress, quint16);
+    void sendClicked(QString msg);
+    void closeWidgetClicked();
 };
 #endif // WIDGET_H

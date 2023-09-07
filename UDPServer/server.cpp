@@ -3,20 +3,22 @@
 Server::Server(QObject *parent)
     : QObject{parent}
 {
+    mySocket = new QUdpSocket;
+    objPackManager = new PackManager;
     quint16 port = 100;
     this->bind(QHostAddress::LocalHost, port);
 }
 
 Server::~Server()
 {
-    this->closeSocket();
+    delete objPackManager;
+
+    mySocket->close();
+    delete mySocket;
 }
-//Сначала получаем порт из интерфейса, потом биндим порт при нажатии кнопки receive,
-//если датаграммы есть, то отправляем их в интерфейс с помощью datagramToInterface
 
 bool Server::bind(QHostAddress addr, quint16 port)
 {
-    mySocket = new QUdpSocket;
     connect(mySocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
     int status = mySocket->bind(addr, port);
         if(status == true)
@@ -25,43 +27,54 @@ bool Server::bind(QHostAddress addr, quint16 port)
             return false;
 }
 
-void Server::closeSocket()
-{
-    mySocket->close();
-    delete mySocket;
-}
-
 void Server::send(QByteArray datagram, QHostAddress addr)
 {
+    qDebug() << "\nПакет № 5 отправлен ->" << datagram << "Длинна в байтах:" << datagram.size() << "qDebug";
     mySocket->writeDatagram(datagram, addr, senderPort);
 }
 
-void Server::sendWait(QString datagram, QHostAddress addr)
+void Server::sendWaitMsg(QString datagram, QHostAddress addr) //Не тестировалось
 {
-    this->send(("Server: " + datagram).toUtf8(), addr);
+    QByteArray data = datagram.toUtf8();
+    quint8 id = 5; //id msgPack
+    QByteArray completeDatagram = objPackManager->buildPack(id, data.size(), data); //Секция возвращает готовую датаграмму id + length + data
+    this->send(completeDatagram, addr);
 }
 
-QString Server::incomingConnection()
+QString Server::incomingConnection() //ХЕНДШЕЙК все же нужен чтоб сервер понимал что к нему хотят конектится 28.5.23 14:27
 {
     QByteArray datagram;
     datagram.resize(mySocket->pendingDatagramSize());
     mySocket->readDatagram(datagram.data(), datagram.size(), &senderAddr, &senderPort);
-    if(ofOnline == false){ //Секция с хендшейк-сообщением обрабатывает c - connection, нужнодобавить d - disconnect
-        QStringList check = QString(datagram).split('/');
-        qDebug() <<"Хендшейк строка: " << check;
-        if(check[0] == "c")
-            if(check[1] == senderAddr.toString())
-                if(check[2] == QString::number(senderPort))
-                {
-                    ofOnline = true; //Этот флажок будет лежать в базе данных у каждого клиента, показывает подключен ли в данный момент клиент
-                    qDebug() << ofOnline;
-                    //Добавление нового пользовател в вектор пользователей с ником check[1]+"/"+check[2]
-                }
-    } //
 
     if(!QString(datagram).isEmpty()) {
-        emit datagramToInterface(QString(datagram)); //Отправляем сообщение из сокета в интерфейс
+
+        if(objPackManager->takeID(datagram) == 0){
+            qDebug() << "\nПакет № 0 пришел <-";
+            quint8 id = 3;
+            QByteArray completeDatagram = objPackManager->buildPack(id);
+            qDebug() << "\nПакет № 3 отправлен ->" << completeDatagram << "Длинна в байтах:" << completeDatagram.size() << "qDebug";
+            mySocket->writeDatagram(completeDatagram, senderAddr, senderPort);
+            //Отправка packSendConn
+        }
+
+        if(objPackManager->takeID(datagram) == 1){
+            qDebug() << "\nПакет № 1 пришел <-";
+            //Отключение клиента
+        }
+
+        if(objPackManager->takeID(datagram) == 2){
+            qDebug() << "\nПакет № 2 пришел <-" << datagram << "Длинна в байтах:" << datagram.size() << "qDebug";
+            emit datagramToInterface(QString(objPackManager->takeReleaseData(datagram))); //Отправляем сообщение из сокета в интерфейс
+        }
+//        if(){
+//            другие релизации
+//        }
+//        ...
     }
+
+
+
     return QString(datagram);
 }
 

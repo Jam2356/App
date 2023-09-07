@@ -4,11 +4,14 @@ Connection::Connection(QObject *parent)
     : QObject{parent}
 {
     clientSocket = new QUdpSocket;
+    objPackManager = new PacketManager;
 }
 
 Connection::~Connection()
 {
-    clientSocket->abort();
+    delete objPackManager;
+
+    clientSocket->close();
     delete clientSocket;
 }
 
@@ -22,7 +25,8 @@ bool Connection::binding(QHostAddress addr)
     myPort = ds(mt);
     connect(clientSocket, SIGNAL(readyRead()), this, SLOT(incomingConnection()));
     int status = clientSocket->bind(addr, myPort);
-        if(status == true){
+        if(status == true)
+        {
             qDebug() <<"Успешный Bind!" << "Ваш порт: " << myPort;
             return true;
         }
@@ -30,33 +34,66 @@ bool Connection::binding(QHostAddress addr)
             return false;
 }
 
-void Connection::send(QByteArray datagram, QHostAddress addr, quint16 port)
+void Connection::send(QByteArray datagram)
 {
-    clientSocket->writeDatagram(datagram, addr, port);
+    qDebug() << "\nПакет № 2 отправлен ->" << datagram << "Длинна в байтах:" << datagram.size() << "qDebug";
+    clientSocket->writeDatagram(datagram, serverAddr, serverPort);
 }
 
-void Connection::receiveWait(QHostAddress addr, quint16 port)
+void Connection::sendSystemData(quint8 id)
+{
+    QByteArray systemData = objPackManager->buildPack(id);
+    qDebug() << "\nПакет №" << id << " отправлен ->" << systemData << "Длинна в байтах:" << systemData.size() << "qDebug";
+    clientSocket->writeDatagram(systemData, serverAddr, serverPort);
+}
+
+void Connection::connectWait(QHostAddress addr, quint16 port)
 {
     this->binding(addr);
-    this->send(("c/"+addr.toString()+"/"+QString::number(myPort)).toUtf8(), addr ,port); //Отправка первого сообщения на сервер для того чтоб сервер понял, что присоеденился новый человек
-    emit receiveSetBlock();
-    qDebug() << "Первая строка: " << ("c/"+addr.toString()+"/"+QString::number(myPort)).toUtf8(); //Можно попробовать перенести в "По нажатию кнопки receive" c - сonntction
+    serverAddr = addr;
+    serverPort = port;
+    this->sendSystemData(0); //Первое сообщение хендшейк
+    emit connectSetBlock();
 }
 
-void Connection::sendWait(QString datagram ,QHostAddress addr, quint16 port)
+void Connection::disconnectWait()
 {
-    this->send(("Client: " + datagram).toUtf8(), addr ,port);
+    this->sendSystemData(1); //Отправляем запрос на отсоединение от сервера
+}
+
+void Connection::sendWait(QString datagram)
+{
+    if(fStatusConnect)
+    {
+        QByteArray data = datagram.toUtf8();
+        quint8 id = 2;
+        QByteArray completeDatagram = objPackManager->buildPack(id, data.size(), data);
+        this->send(completeDatagram);
+    }
 }
 
 QString Connection::incomingConnection()
 {
-    QHostAddress senderAddr;
-    quint16 senderPort;
     QByteArray datagram;
     datagram.resize(clientSocket->pendingDatagramSize());
-    clientSocket->readDatagram(datagram.data(), datagram.size(), &senderAddr, &senderPort);
-    if(!QString(datagram).isEmpty()) {
-        emit datagramToInterface(QString(datagram)); //Отправляем сообщение из сокета в интерфейс
+    clientSocket->readDatagram(datagram.data(), datagram.size(), &serverAddr, &serverPort);
+    if(!QString(datagram).isEmpty())
+    {
+        if(objPackManager->takeID(datagram) == 3)
+        {
+            qDebug() << "\nПакет № 3 пришел <-" << datagram << "Длинна в байтах:" << datagram.size() << "qDebug";
+            fStatusConnect = true;
+        }
+
+        if(objPackManager->takeID(datagram) == 5)
+        {
+            qDebug() << "\nПакет № 5 пришел <-" << datagram << "Длинна в байтах:" << datagram.size() << "qDebug";
+            emit datagramToInterface(QString(objPackManager->takeReleaseData(datagram))); //Отправляем сообщение из сокета в интерфейс
+        }
+//        if(){
+//            другие релизации
+//        }
+//        ...
     }
     return QString(datagram);
 }
